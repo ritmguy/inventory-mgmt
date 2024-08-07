@@ -1,0 +1,3 @@
+docker-start.sh
+.env.dev
+.env.prod
