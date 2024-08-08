@@ -56,6 +56,7 @@ RUN \
     libsodium-dev \
     zlib1g-dev \
     vim \
+    libzip-dev \
     #
     # Clean up installation artifacts to make image leaner
     #

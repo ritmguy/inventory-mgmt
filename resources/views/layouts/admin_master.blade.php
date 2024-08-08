@@ -60,14 +60,14 @@ Products
 
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Products
+                            Devices
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.product') }}">All Products</a>
-                                <a class="nav-link" href="{{ route('add.product') }}">New Product</a>
-                                <a class="nav-link" href="{{ route('available.products') }}">Available Products</a>
+                                <a class="nav-link" href="{{ route('all.product') }}">All Devices</a>
+                                <a class="nav-link" href="{{ route('add.product') }}">New Devices</a>
+                                <a class="nav-link" href="{{ route('available.products') }}">Available Devices</a>
                             </nav>
                         </div>
                         <!--
@@ -111,21 +111,17 @@ Products
                             -->
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthentication" aria-expanded="false" aria-controls="collapseAuthentication">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Contacts
+                            Assginee
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('add.customer') }}">New Contact</a>
+                                <a class="nav-link" href="{{ route('all.customers') }}">All Assginees</a>
                             </nav>
-                        </div>
-                        <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.customers') }}">Contacts List</a>
+                                <a class="nav-link" href="{{ route('add.customer') }}">Add New Assginee</a>
                             </nav>
                         </div>
-
-
 
                     </div>
             </nav>
@@ -134,10 +130,11 @@ Products
 
             @yield('content')
 
+            <!-- Footer / Notes -->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Shakil Ahmed, Ekram Asif & Safana Quyum Chowdhury</div>
+                        <div class="text-muted">Copyright &copy; Killa Bee/John Smith Industries</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -152,20 +149,6 @@ Products
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('backend') }}/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('backend') }}/assets/demo/chart-area-demo.js"></script>
-    <script src="{{ asset('backend') }}/assets/demo/chart-bar-demo.js"></script>
-    <!-- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script> -->
-    <!-- <script src="{{ asset('backend') }}/assets/demo/datatables-demo.js"></script>  -->
-    <!-- 
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script> -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -176,6 +159,13 @@ Products
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
 
+    <!-- Document on ready function -->
+    <script>
+        // Call the dataTables jQuery plugin
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+        });
+</script>
     @yield('script')
 </body>
 
