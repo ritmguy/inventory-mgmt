@@ -3,31 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
-
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Device;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
-    // public function __construct(){
-    // 	$this->middleware('auth');
-    // }
 
-    public function store(Request $request)
+
+    public function store(Request $request): RedirectResponse
     {
 
-        $data = new Product;
-        $data->product_code = $request->code;
-        $data->name = $request->name;
-        $data->category = $request->category;
-        $data->stock = $request->stock;
-        $data->unit_price = $request->unit_price;
-        // $data->total_price = $request->stock * $request->unit_price;
-        $data->sales_unit_price = $request->sale_price;
-        // $data->sales_stock_price =$request->stock * $request->sale_price;
+        // $data = new Product;
+        // $data->product_code = $request->code;
+        // $data->name = $request->name;
+        // $data->category = $request->category;
+        // $data->stock = $request->stock;
+        // $data->unit_price = $request->unit_price;
+        // // $data->total_price = $request->stock * $request->unit_price;
+        // $data->sales_unit_price = $request->sale_price;
+        // // $data->sales_stock_price =$request->stock * $request->sale_price;
 
 
-        $data->save();
+        // $data->save();
+
+        Product::create([
+            'product_code' => $request->input('code'),
+            'name' => $request->input('name'),
+            'category' => $request->input('category'),
+            'stock' => $request->input('stock'),
+            'unit_price' => $request->input('unit_price') ?? '0.00',
+            'sales_unit_price' => $request->input('sale_price') ?? '0.00',
+        ]);
         return redirect()->route('all.product');
     }
 

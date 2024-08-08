@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DeviceController;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -80,6 +81,16 @@ Route::get('/add-customer', function () {
 Route::post('/insert-customer', [CustomerController::class, 'store'])->middleware(['auth']);
 
 Route::get('/all-customers', [CustomerController::class, 'customersData'])->middleware(['auth'])->name('all.customers');
+
+
+// Device
+Route::controller(DeviceController::class)->middleware(['auth'])->group(function () {
+    Route::get('/all-devices', 'allDevices')->name('all.devices');
+    Route::get('/assign-device', 'assignNewDevice')->name('device.assign');
+    Route::post('/assign/{$id}', 'assign');
+});
+
+
 
 
 Route::get('/dashboard', function () {
