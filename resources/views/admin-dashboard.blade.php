@@ -9,13 +9,13 @@
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
         <div class="row">
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-5 col-md-6">
                 <div class="card bg-primary text-white mb-4">
                     <div class="card-body">
                         Laptops
                         <div class="row">
 
-                            <div class="col-xs-2 px-6 py-4">
+                            <div class="col-xs-2 px-4 py-4">
                                 @foreach($products as $product)
                                 @if($product->category != 'Laptops')
                                 @else 
@@ -37,13 +37,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-5 col-md-6">
                 <div class="card bg-warning text-white mb-4">
                     <div class="card-body">
                         Headsets
                         <div class="row">
 
-                            <div class="col-xs-2 px-6 py-4">
+                            <div class="col-xs-2 px-4 py-4">
                                 @foreach($products as $product)
                                 @if($product->category != 'Headset')
                                 
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-md-6">
+            <!--<div class="col-xl-3 col-md-6">
                 <div class="card bg-success text-white mb-4">
                     <div class="card-body">Available Products</div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-xl-3 col-md-6">
+             <div class="col-xl-3 col-md-6">
                 <div class="card bg-danger text-white mb-4">
                     <div class="card-body">Pending Orders</div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
