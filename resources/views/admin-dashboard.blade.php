@@ -18,7 +18,7 @@
                             <div class="col-xs-2 px-4 py-4">
                                 @foreach($products as $product)
                                 @if($product->category != 'Laptops')
-                                @else 
+                                @else
                                 <div class="card text-dark mb-4 px-4 py-2">
 
                                     <h4 class="text-gray">{{ $product->name }}</h4>
@@ -46,8 +46,8 @@
                             <div class="col-xs-2 px-4 py-4">
                                 @foreach($products as $product)
                                 @if($product->category != 'Headset')
-                                
-                                @else 
+
+                                @else
                                 <div class="card text-dark mb-4 px-4 py-2">
 
                                     <h4 class="text-gray">{{ $product->name }}</h4>
@@ -165,4 +165,14 @@
         </div>
     </div>
 </main>
+@endsection
+
+@section('script')
+<!-- Document on ready function -->
+<script>
+    // Call the dataTables jQuery plugin
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
 @endsection

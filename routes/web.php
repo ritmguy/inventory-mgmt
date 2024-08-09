@@ -20,6 +20,7 @@ use App\Models\Product;
 |
 */
 
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -81,13 +82,15 @@ Route::get('/add-customer', function () {
 Route::post('/insert-customer', [CustomerController::class, 'store'])->middleware(['auth']);
 
 Route::get('/all-customers', [CustomerController::class, 'customersData'])->middleware(['auth'])->name('all.customers');
-
+Route::get('/edit-customer', function () {
+    return view('Admin.edit_customer');
+})->middleware(['auth'])->name('assignee.edit');
 
 // Device
 Route::controller(DeviceController::class)->middleware(['auth'])->group(function () {
     Route::get('/all-devices', 'allDevices')->name('all.devices');
     Route::get('/assign-device', 'assignNewDevice')->name('device.assign');
-    Route::post('/assign/{$id}', 'assign');
+    // Route::get('/assign', 'assign');
 });
 
 

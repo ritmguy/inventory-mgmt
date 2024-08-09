@@ -72,16 +72,15 @@ class DeviceController extends Controller
      * Assign Device to agent
      *
      * @param Request $request
-     * @param string  $id
      *
      * @return RedirectResponse
      */
-    public function assign(Request $request, string $id): RedirectResponse
+    public function assign(Request $request): RedirectResponse
     {
         try {
             Customer::where('id', $request->input('assignee'))
                 ->update([
-                    'device_id' => $id,
+                    'device_id' => $request->input('device_id'),
                 ]);
             return redirect()->route('all.customers');
         } catch (Exception $e) {

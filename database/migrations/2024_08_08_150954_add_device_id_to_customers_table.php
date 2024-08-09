@@ -14,7 +14,7 @@ class AddDeviceIdToCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->string('device_id', 50)->index()->after('phone');
+            $table->string('device_id', 50)->index()->after('phone')->nullable();
         });
     }
 
