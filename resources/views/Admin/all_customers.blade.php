@@ -29,14 +29,17 @@
                         <td>{{ $row->phone }}</td>
 
                         @if($row->device_id !== null)
-                        <td><i class="fa fa-check-circle fa-lg" aria-hidden="false"></i></td>
+                        <td><i class="fa fa-check-circle fa-lg text-success" aria-hidden="false"></i></td>
                         <td>{{ $row->device_id }}</td>
                         @else
-                        <td><i class="fa fa-times-circle fa-lg" aria-hidden="false"></i></td>
+                        <td><i class="fa fa-times-circle fa-lg text-danger" aria-hidden="false"></i></td>
                         <td></td>
                         @endif
                         <td>
-                            <a href="{{url('/edit-customer')}}" class="btn btn-sm btn-info">Edit</a>
+                            <a href="{{url('/edit-customer')}}" class="btn btn-sm btn-info">
+                                <i class="fa fa-edit" aria-hidden="false"></i>
+                                Edit
+                            </a>
                         </td>
                     </tr>
                     @endforeach
