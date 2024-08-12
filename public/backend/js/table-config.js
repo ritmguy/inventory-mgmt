@@ -41,7 +41,7 @@
                 }
             },
 
-            'colvis', 'csv'
+            'csv', 'zip', 'pdf'
 
         ],
 
