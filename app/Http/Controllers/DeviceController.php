@@ -39,7 +39,6 @@ class DeviceController extends Controller
             ->leftJoin('customers', 'customers.device_id', '=', 'devices.unique_id')
             ->leftJoin('products', 'devices.product_id', '=', 'products.id')
             ->orderBy('devices.updated_at', 'desc')
-            ->limit(25)
             ->get();
 
         foreach ($rs as $device) {
@@ -86,5 +85,20 @@ class DeviceController extends Controller
         } catch (Exception $e) {
             error_log('AssignDevice Exception: ' . $e->getMessage());
         }
+    }
+
+
+    /**
+     * Return available devices view
+     *
+     * @return View
+     */
+    public function availableDevices(): View
+    {
+
+        $devices = Device::whereNot('device_status', 'assigned')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        return view('Admin.available_devices')->with($devices);
     }
 }

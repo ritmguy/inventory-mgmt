@@ -2,8 +2,8 @@
 @section('content')
 <div class="card mb-4">
     <div class="card-header">
-        <i class="fas fa-table mr-1"></i>
-        All Devices
+        <i class="fas fa-contact-card" aria-hidden="true"></i>
+        All Agents
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -11,26 +11,23 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Product Code</th>
-                        <th>Status</th>
-                        <th>Assignee</th>
+                        <th>Address</th>
+                        <th>Phone</th>
                         <th>Last Update</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($devices as $row)
+                    @foreach($customers as $agent)
                     <tr>
-                        <td>{{ $row['device_name'] }}</td>
-                        <td>{{ $row['product_code'] }}</td>
-                        <td>{{ $row['device_status'] }}</td>
-                        <td>{{ $row['assignee'] }}</td>
-                        <td>{{ $row['last_update'] }}</td>
+                        <td>{{ $agent['first_name'] . ' ' . $agent['last_name'] }}</td>
+                        <td>{{ $agent['address1'] . ' ' . $agent['address_city'] . ', ' . $agent['address_state'] . ' ' . $agent['address_zip']}}</td>
+                        <td>{{ $agent['phone_number'] }}</td>
+                        <td>{{ $agent['updated_at'] }}</td>
 
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                            <a href="{{ route('assign.device') . '/' . $row['device_uuid'] }}" class="btn btn-sm btn-success">Re-Assign</a>
+                            <a href="{{ route('edit.agent', $agent['id']) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
+                            <!-- <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Delete</a> -->
                         </td>
                     </tr>
                     @endforeach

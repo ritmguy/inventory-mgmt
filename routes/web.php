@@ -6,6 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\AgentController;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -89,8 +90,18 @@ Route::get('/edit-customer', function () {
 // Device
 Route::controller(DeviceController::class)->middleware(['auth'])->group(function () {
     Route::get('/all-devices', 'allDevices')->name('all.devices');
-    Route::get('/assign-device', 'assignNewDevice')->name('device.assign');
-    // Route::get('/assign', 'assign');
+    Route::get('/assign-device', 'assignNewDevice')->name('assign.device');
+    // Route::post('/assign', 'assign');
+    Route::get('/available-devices', 'availableDevices')->name('available.devices');
+});
+
+// Agents
+Route::controller(AgentController::class)->middleware(['auth'])->group(function () {
+    Route::get('/new-agent', 'create')->name('add.agent');
+    Route::get('/edit-agent/{id}', 'edit')->name('edit.agent');
+    Route::get('/all-agents', 'view')->name('all.agents');
+    Route::post('/update-agent', 'update')->name('update.agent');
+    Route::post('/create-agent', 'createAgent')->name('create.agent');
 });
 
 

@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
 
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -83,9 +84,9 @@
                         </a>
                         <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.product') }}">All Devices</a>
-                                <a class="nav-link" href="{{ route('add.product') }}">Add New Device</a>
-                                <a class="nav-link" href="{{ route('available.products') }}">Available Devices</a>
+                                <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
+                                <a class="nav-link" href="{{ route('assign.device') }}">Add New Device</a>
+                                <a class="nav-link" href="{{ route('available.devices') }}">Available Devices</a>
                             </nav>
                         </div>
                         <!--
@@ -134,10 +135,10 @@
                         </a>
                         <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.customers') }}">All Assginees</a>
+                                <a class="nav-link" href="{{ route('all.agents') }}">All Assginees</a>
                             </nav>
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('add.customer') }}">Add New Assginee</a>
+                                <a class="nav-link" href="{{ route('add.agent') }}">Add New Assginee</a>
                             </nav>
                         </div>
 

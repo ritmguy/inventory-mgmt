@@ -9,7 +9,7 @@
     $('#dataTable').DataTable({
         columnDefs: [{
             bSortable: false,
-            targets: [5]
+            // targets: [5]
         }],
         dom: 'lBfrtip',
         buttons: [{
