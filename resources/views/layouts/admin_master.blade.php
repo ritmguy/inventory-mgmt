@@ -70,7 +70,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
                         <a class="nav-link" href="{{ route('dashboard') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
@@ -85,60 +85,22 @@
                         <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
-                                <a class="nav-link" href="{{ route('assign.device') }}">Add New Device</a>
+                                <a class="nav-link" href="{{ route('add.device') }}">Add New Device</a>
                                 <a class="nav-link" href="{{ route('available.devices') }}">Available Devices</a>
                             </nav>
                         </div>
-                        <!--
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="false" aria-controls="collapseOrders">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Orders
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('new.order')}}">New Order</a>
-                                </nav>
-                            </div>
-                            <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('all.orders')}}">Orders List</a>
-                                </nav>
-                            </div>
-                            <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('pending.orders')}}">Pending Orders</a>
-                                </nav>
-                            </div>
-                            <div class="collapse" id="collapseOrders" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('delivered.orders')}}">Delivered Orders</a>
-                                </nav>
-                            </div>
 
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoice" aria-expanded="false" aria-controls="collapseInvoice">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Sales
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseInvoice" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('new.invoice') }}">New Invoice</a>
-                                    <a class="nav-link" href="{{ route('all.invoices') }}">Invoices List</a>
-                                </nav>
-                            </div>
-                            -->
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthentication" aria-expanded="false" aria-controls="collapseAuthentication">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Assginees
+                            Agents
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.agents') }}">All Assginees</a>
+                                <a class="nav-link" href="{{ route('all.agents') }}">All Agents</a>
                             </nav>
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('add.agent') }}">Add New Assginee</a>
+                                <a class="nav-link" href="{{ route('add.agent') }}">Add New Agent</a>
                             </nav>
                         </div>
 

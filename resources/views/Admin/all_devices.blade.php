@@ -3,17 +3,17 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table mr-1"></i>
-        All Devices
+        Device List
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Device Name</th>
                         <th>Product Code</th>
                         <th>Status</th>
-                        <th>Assignee</th>
+                        <th>Assigned</th>
                         <th>Last Update</th>
                         <th>Action</th>
                     </tr>
@@ -24,7 +24,12 @@
                         <td>{{ $row['device_name'] }}</td>
                         <td>{{ $row['product_code'] }}</td>
                         <td>{{ $row['device_status'] }}</td>
-                        <td>{{ $row['assignee'] }}</td>
+                        @if($row['is_assigned'] === 1)
+                        <td><i class="fas fa-check text-success"></i></td>
+                        @else
+                        <td><i class="fas fa-times text-danger"></i></td>
+                        @endif
+
                         <td>{{ $row['last_update'] }}</td>
 
                         <td>

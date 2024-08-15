@@ -90,8 +90,10 @@ Route::get('/edit-customer', function () {
 // Device
 Route::controller(DeviceController::class)->middleware(['auth'])->group(function () {
     Route::get('/all-devices', 'allDevices')->name('all.devices');
-    Route::get('/assign-device', 'assignNewDevice')->name('assign.device');
+    Route::get('/assign-device/{id}', 'assignNewDevice')->name('assign.device');
+    Route::get('/add-device', 'addDevice')->name('add.device');
     // Route::post('/assign', 'assign');
+    Route::post('/create-device', 'create')->name('create.device');
     Route::get('/available-devices', 'availableDevices')->name('available.devices');
 });
 

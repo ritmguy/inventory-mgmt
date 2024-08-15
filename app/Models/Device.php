@@ -31,6 +31,15 @@ class Device extends Model
     protected $keyType = 'int';
 
     /**
+     * The columns taht aren't mass assignable
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'id'
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array

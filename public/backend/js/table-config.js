@@ -9,40 +9,44 @@
     $('#dataTable').DataTable({
         columnDefs: [{
             bSortable: false,
-            // targets: [5]
+            // targets: [0]
         }],
         dom: 'lBfrtip',
-        buttons: [{
-                extend: 'copyHtml5',
-                exportOptions: {
-                    modifier: {
-                        page: 'current'
-                    },
-                    columns: [0, ':visible']
+        layout: {
+        topStart: 'buttons'
+        },
+        // buttons: [{
+        //         extend: 'copyHtml5',
+        //         exportOptions: {
+        //             modifier: {
+        //                 page: 'current'
+        //             },
+        //             columns: [0, ':visible']
 
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    modifier: {
-                        page: 'current'
-                    },
-                    columns: [0, ':visible']
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    modifier: {
-                        page: 'current'
-                    },
-                    columns: [0, 1, 2, 5]
-                }
-            },
+        //         }
+        //     },
+        //     {
+        //         extend: 'excelHtml5',
+        //         exportOptions: {
+        //             modifier: {
+        //                 page: 'current'
+        //             },
+        //             columns: [0, ':visible']
+        //         }
+        //     },
+        //     {
+        //         extend: 'pdfHtml5',
+        //         exportOptions: {
+        //             modifier: {
+        //                 page: 'current'
+        //             },
+        //             columns: [0, 1, 2, 5]
+        //         }
+        //     },
 
-            'csv', 'zip', 'pdf'
+        //     'csv', 'zip', 'pdf'
 
-        ],
+        // ],
+        buttons: ['csv', 'zip', 'pdf'],
 
     });

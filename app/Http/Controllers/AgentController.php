@@ -6,13 +6,7 @@ use App\Models\Agent;
 use App\Models\Device;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use DateTimeZone;
-use DateTime;
-use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class AgentController extends Controller
@@ -20,7 +14,7 @@ class AgentController extends Controller
 
 
     /**
-     * Create agent before assigning devices
+     * Create agent view
      *
      * @return View
      */
@@ -29,13 +23,26 @@ class AgentController extends Controller
         return view('Admin.create_agent');
     }
 
+    /**
+     * Show all agents view
+     *
+     * @return View
+     */
     public function view(): View
     {
         $customers = Agent::all();
         return view('Admin.all_agents', compact('customers'));
     }
 
-    public function edit(Request $request, $id): View
+    /**
+     * Edit agent view with assigned devices
+     *
+     * @param Request $request
+     * @param string  $id
+     *
+     * @return View
+     */
+    public function edit(Request $request, string $id): View
     {
         $agent = Agent::find($id);
         $devices = Device::where('agent_id', $id)->get();
@@ -55,6 +62,13 @@ class AgentController extends Controller
         return view('Admin.edit_agent', compact('agent'))->with('out', $out);
     }
 
+    /**
+     * Edit agent in table
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
     public function update(Request $request): RedirectResponse
     {
         Agent::where('id', $request->input('agentId'))
@@ -74,6 +88,13 @@ class AgentController extends Controller
         return redirect()->route('all.agents');
     }
 
+    /**
+     * Create agent in table
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
     public function createAgent(Request $request): RedirectResponse
     {
         Agent::create([

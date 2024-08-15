@@ -6,14 +6,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Device;
-use App\Models\Customer;
+use App\Models\Agent;
 use Carbon\Carbon;
 use DateTimeZone;
 use DateTime;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class DeviceController extends Controller
@@ -32,11 +30,10 @@ class DeviceController extends Controller
             'products.product_code',
             'device_name',
             'device_status',
-            'customers.name as assignee',
+            'is_assigned',
             'devices.updated_at as last_update',
             'unique_id'
         )
-            ->leftJoin('customers', 'customers.device_id', '=', 'devices.unique_id')
             ->leftJoin('products', 'devices.product_id', '=', 'products.id')
             ->orderBy('devices.updated_at', 'desc')
             ->get();
@@ -48,23 +45,27 @@ class DeviceController extends Controller
                 'product_code' => $device['product_code'],
                 'device_name' => $device['device_name'],
                 'device_status' => $device['device_status'],
-                'assignee' => $device['assignee'],
+                'is_assigned' => $device['is_assigned'],
                 'last_update' =>  $lastUpdate !== '' ? $lastUpdate->toDateTimeString() : null,
             ];
         }
-        info('Devices => ' . json_encode($devices));
+
         return view('Admin.all_devices')->with('devices', $devices);
     }
 
     /**
      * Show assign device view
      *
+     * @param Request $request
+     * @param string  $id
+     *
      * @return View
      */
-    public function assignNewDevice(): View
+    public function assignNewDevice(Request $request, string $id): View
     {
+        $device = Device::where('unique_id', $id)->first();
 
-        return view('Admin.assign_device');
+        return view('Admin.assign_device')->with('device', $device);
     }
 
     /**
@@ -77,16 +78,28 @@ class DeviceController extends Controller
     public function assign(Request $request): RedirectResponse
     {
         try {
-            Customer::where('id', $request->input('assignee'))
+            Agent::where('id', $request->input('assignee'))
                 ->update([
                     'device_id' => $request->input('device_id'),
                 ]);
-            return redirect()->route('all.customers');
+            return redirect()->route('all.agents')->with('results', []);
         } catch (Exception $e) {
             error_log('AssignDevice Exception: ' . $e->getMessage());
+            return redirect()->back()->with('results', []);
         }
     }
 
+    /**
+     * Add New devices view
+     *
+     * @return View
+     */
+    public function addDevice(): View
+    {
+        $categories = Product::all();
+
+        return view('Admin.add_device')->with('category', $categories);
+    }
 
     /**
      * Return available devices view
@@ -96,9 +109,36 @@ class DeviceController extends Controller
     public function availableDevices(): View
     {
 
-        $devices = Device::whereNot('device_status', 'assigned')
+        $devices = Device::where('is_assigned', false)
             ->orderBy('updated_at', 'desc')
             ->get();
-        return view('Admin.available_devices')->with($devices);
+        return view('Admin.all_devices')->with('devices', $devices);
+    }
+
+    /**
+     * Add new device to system
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function create(Request $request): RedirectResponse
+    {
+        try {
+
+            Device::create(
+                [
+                    'unique_id' => Str::uuid(),
+                    'product_id' => $request->input('device_type'),
+                    'device_name' => $request->input('device_name') ?? '',
+                    'device_status' => 'instock'
+                ]
+            );
+            return redirect()->route('all.devices')->with('results', []);
+        } catch (Exception $e) {
+
+            error_log('AddDevice Exception: ' . $e->getMessage());
+            return redirect()->back()->with('results', json_encode(['exception' => $e->getMessage()]));
+        }
     }
 }
