@@ -33,9 +33,9 @@
                         <td>{{ $row['last_update'] }}</td>
 
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('device.edit', $row['device_uuid']) }}" class="btn btn-sm btn-primary">Edit</a>
                             <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                            <a href="{{ route('assign.device') . '/' . $row['device_uuid'] }}" class="btn btn-sm btn-success">Re-Assign</a>
+                            <a href="{{ route('assign.device', $row['device_uuid']) }}" class="btn btn-sm btn-success">Re-Assign</a>
                         </td>
                     </tr>
                     @endforeach

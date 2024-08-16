@@ -86,7 +86,6 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
                                 <a class="nav-link" href="{{ route('add.device') }}">Add New Device</a>
-                                <a class="nav-link" href="{{ route('available.devices') }}">Available Devices</a>
                             </nav>
                         </div>
 

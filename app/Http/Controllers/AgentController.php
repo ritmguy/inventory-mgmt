@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Agent;
 use App\Models\Device;
 use App\Models\Product;
+use App\Models\Transaction as Log;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class AgentController extends Controller
@@ -84,6 +87,22 @@ class AgentController extends Controller
                 'is_active' => $request->input('active') === true ? true : false,
             ]);
 
+        // Log Event
+        $this->log('edit_agent', [
+            'device' => [],
+            'agent' => [
+                'agent_id' => $request->input('agent_id'),
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'phone_number' => $request->input('phone'),
+                'address1' => $request->input('address1'),
+                'address2' => $request->input('address2'),
+                'address_city' => $request->input('address_city'),
+                'address_state' => $request->input('address_state'),
+                'address_zip' => $request->input('address_zip'),
+                'is_active' => $request->input('active') === true ? true : false,
+            ]
+        ]);
 
         return redirect()->route('all.agents');
     }
@@ -107,6 +126,43 @@ class AgentController extends Controller
             'address_state' => $request->input('address_state'),
             'address_zip' => $request->input('address_zip')
         ]);
+
+        // Log Event
+        $this->log('add_agent', [
+            'device' => [],
+            'agent' => [
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'phone_number' => $request->input('phone'),
+                'address1' => $request->input('address1'),
+                'address2' => $request->input('address2'),
+                'address_city' => $request->input('address_city'),
+                'address_state' => $request->input('address_state'),
+                'address_zip' => $request->input('address_zip'),
+            ]
+        ]);
+
         return redirect()->route('all.agents');
+    }
+
+    /**
+     * Log Event
+     *
+     * @param string       $eventType
+     * @param string|array $message
+     *
+     * @return void
+     */
+    private function log(string $eventType, string|array $message): void
+    {
+        try {
+            Log::create([
+                'transaction_id' => Str::uuid(),
+                'transaction_type' => $eventType,
+                'notes' => json_encode($message),
+            ]);
+        } catch (Exception $e) {
+            error_log('LogTransaction Exception: ' . $e->getMessage());
+        }
     }
 }

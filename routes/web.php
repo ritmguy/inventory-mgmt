@@ -91,10 +91,11 @@ Route::get('/edit-customer', function () {
 Route::controller(DeviceController::class)->middleware(['auth'])->group(function () {
     Route::get('/all-devices', 'allDevices')->name('all.devices');
     Route::get('/assign-device/{id}', 'assignNewDevice')->name('assign.device');
+    Route::get('/device-edit/{id}', 'editDevice')->name('device.edit');
     Route::get('/add-device', 'addDevice')->name('add.device');
-    // Route::post('/assign', 'assign');
+    Route::post('/device-assign', 'assign')->name('device.assign');
     Route::post('/create-device', 'create')->name('create.device');
-    Route::get('/available-devices', 'availableDevices')->name('available.devices');
+    Route::post('/update-device', 'update')->name('edit.device');
 });
 
 // Agents
