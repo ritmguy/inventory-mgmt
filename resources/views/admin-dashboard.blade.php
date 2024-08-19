@@ -16,13 +16,13 @@
                         <div class="row">
 
                             <div class="col-xs-2 px-4 py-4">
-                                @foreach($products as $product)
-                                @if($product->category != 'Laptops')
+                                @foreach($devices as $device)
+                                @if($device['category'] != 'Laptops')
                                 @else
                                 <div class="card text-dark mb-4 px-4 py-2">
 
-                                    <h4 class="text-gray">{{ $product->name }}</h4>
-                                    {{ $product->stock }}
+                                    <h4 class="text-gray">{{ $device['name'] }} - {{ $device['code'] }}</h4>
+                                    {{ $device['assigned'] }} Assigned / {{ $device['unassigned'] }} Unassigned
 
                                 </div>
                                 @endif
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('all.product') }}">View Details</a>
+                        <a class="small text-white stretched-link" href="{{ route('all.devices') }}">View Details</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -44,14 +44,14 @@
                         <div class="row">
 
                             <div class="col-xs-2 px-4 py-4">
-                                @foreach($products as $product)
-                                @if($product->category != 'Headset')
+                                @foreach($devices as $device)
+                                @if($device['category'] != 'Headset')
 
                                 @else
                                 <div class="card text-dark mb-4 px-4 py-2">
 
-                                    <h4 class="text-gray">{{ $product->name }}</h4>
-                                    {{ $product->stock }}
+                                    <h4 class="text-gray">{{ $device['name'] }} - {{ $device['code'] }}</h4>
+                                    {{ $device['assigned'] }} Assigned / {{ $device['unassigned'] }} Unassigned
 
                                 </div>
                                 @endif
@@ -60,103 +60,39 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('all.product') }}">View Details</a>
+                        <a class="small text-white stretched-link" href="{{ route('all.devices') }}">View Details</a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
-            <!--<div class="col-xl-3 col-md-6">
-                <div class="card bg-success text-white mb-4">
-                    <div class="card-body">Available Products</div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('available.products') }}">View Details</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-xl-3 col-md-6">
-                <div class="card bg-danger text-white mb-4">
-                    <div class="card-body">Pending Orders</div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{ route('pending.orders') }}">View Details</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div> -->
+
         </div>
-        <div class="row">
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-area mr-1"></i>
-                        Area Chart Example
-                    </div>
-                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar mr-1"></i>
-                        Bar Chart Example
-                    </div>
-                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                </div>
-            </div>
-        </div>
+
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
-                DataTable Example
+                Recent Transactions
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Type</th>
+                                <th>User ID</th>
+                                <th>Notes</th>
+                                <th>Last Update</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
                         <tbody>
+                            @foreach($transactions as $action)
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td>{{ $action->transaction_type }}</td>
+                                <td>{{ $action->user_id }}</td>
+                                <td>{{ $action->notes }}</td>
+                                <td>{{ $action->updated_at }}</td>
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
+                            @endforeach
 
                         </tbody>
                     </table>
@@ -172,7 +108,9 @@
 <script>
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#dataTable').DataTable();
+        $('#dataTable').DataTable({
+            order: [3, 'desc']
+        });
     });
 </script>
 @endsection

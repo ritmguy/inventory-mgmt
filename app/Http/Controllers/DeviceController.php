@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DeviceController extends Controller
@@ -224,6 +225,7 @@ class DeviceController extends Controller
                 'transaction_id' => Str::uuid(),
                 'transaction_type' => $eventType,
                 'notes' => json_encode($message),
+                'user_id' => Auth::id()
             ]);
         } catch (Exception $e) {
             error_log('LogTransaction Exception: ' . $e->getMessage());

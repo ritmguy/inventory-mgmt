@@ -67,7 +67,8 @@
                             </div>
 
 
-                            <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Add Agent</button></div>
+                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-lg fa-plus"></i> Add Agent</button></div>
+                            <div class="form-group mt-4 mb-0"><button class="btn btn-danger btn-block"><i class="fa fa-xl fa-times"></i> Cancel</button></div>
 
                         </form>
                     </div>

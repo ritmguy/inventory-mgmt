@@ -12,7 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('backend') }}/js/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.js" crossorigin="anonymous"></script>
 
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js" />
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.jqueryui.js" />
@@ -29,7 +29,7 @@
     <link href="{{ asset('backend') }}/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css" rel="stylesheet" />
 
 
 </head>
