@@ -34,8 +34,25 @@ class AgentController extends Controller
      */
     public function view(): View
     {
-        $customers = Agent::all();
-        return view('Admin.all_agents', compact('customers'));
+        $agents = Agent::all();
+
+        foreach ($agents as $agent) {
+            $devices = Device::where('is_assigned', true)
+                ->where('agent_id', $agent['id'])
+                ->count();
+
+            $out[] = [
+                'name' => $agent['first_name'] . ' ' . $agent['last_name'],
+                'address' => $agent['address1'] . ' ' . $agent['address_city'] . ', ' . $agent['address_state'] . ' ' . $agent['address_zip'],
+                'phone' => phone($agent['phone_number'], 'US', 'NATIONAL'),
+                'updated_at' => $agent['updated_at'],
+                'id' => $agent['id'],
+                'device_count' => $devices,
+            ];
+        }
+
+        return view('Admin.all_agents')
+            ->with('agents', $out);
     }
 
     /**
@@ -51,6 +68,7 @@ class AgentController extends Controller
         $agent = Agent::find($id);
         $devices = Device::where('agent_id', $id)->get();
         $out = [];
+        $agentPhone = phone($agent->phone_number, 'US', 'NATIONAL');
 
         foreach ($devices as $device) {
             $product = Product::find($device['product_id']);
@@ -60,10 +78,13 @@ class AgentController extends Controller
                 'product_code' => $product->product_code,
                 'device_name' => $device['device_name'],
                 'device_type' => $product->category,
+                'device_id' => $device['unique_id'],
             ];
         }
 
-        return view('Admin.edit_agent', compact('agent'))->with('out', $out);
+        return view('Admin.edit_agent', compact('agent'))
+            ->with('devices', $out)
+            ->with('agent_phone', $agentPhone);
     }
 
     /**
@@ -75,34 +96,28 @@ class AgentController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
+
+        $phone = $this->cleanInputString($request->input('phone_number'));
+
+        $data = [
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'phone_number' => $phone,
+            'address1' => $request->input('address1'),
+            'address2' => $request->input('address2'),
+            'address_city' => $request->input('address_city'),
+            'address_state' => $request->input('address_state'),
+            'address_zip' => $request->input('address_zip'),
+            'is_active' => $request->input('active') === true ? true : false,
+        ];
+
         Agent::where('id', $request->input('agentId'))
-            ->update([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'phone_number' => $request->input('phone'),
-                'address1' => $request->input('address1'),
-                'address2' => $request->input('address2'),
-                'address_city' => $request->input('address_city'),
-                'address_state' => $request->input('address_state'),
-                'address_zip' => $request->input('address_zip'),
-                'is_active' => $request->input('active') === true ? true : false,
-            ]);
+            ->update($data);
 
         // Log Event
         $this->log('edit_agent', [
             'device' => [],
-            'agent' => [
-                'agent_id' => $request->input('agent_id'),
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'phone_number' => $request->input('phone'),
-                'address1' => $request->input('address1'),
-                'address2' => $request->input('address2'),
-                'address_city' => $request->input('address_city'),
-                'address_state' => $request->input('address_state'),
-                'address_zip' => $request->input('address_zip'),
-                'is_active' => $request->input('active') === true ? true : false,
-            ]
+            'agent' => $data
         ]);
 
         return redirect()->route('all.agents');
@@ -117,30 +132,26 @@ class AgentController extends Controller
      */
     public function createAgent(Request $request): RedirectResponse
     {
-        Agent::create([
+
+        $phone = $this->cleanInputString($request->input('phone'));
+
+        $data = [
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
-            'phone_number' => $request->input('phone'),
+            'phone_number' => $phone,
             'address1' => $request->input('address1'),
             'address2' => $request->input('address2'),
             'address_city' => $request->input('address_city'),
             'address_state' => $request->input('address_state'),
             'address_zip' => $request->input('address_zip')
-        ]);
+        ];
+
+        Agent::create($data);
 
         // Log Event
         $this->log('add_agent', [
             'device' => [],
-            'agent' => [
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'phone_number' => $request->input('phone'),
-                'address1' => $request->input('address1'),
-                'address2' => $request->input('address2'),
-                'address_city' => $request->input('address_city'),
-                'address_state' => $request->input('address_state'),
-                'address_zip' => $request->input('address_zip'),
-            ]
+            'agent' => $data
         ]);
 
         return redirect()->route('all.agents');
@@ -166,5 +177,19 @@ class AgentController extends Controller
         } catch (Exception $e) {
             error_log('LogTransaction Exception: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Cleanup special/unwanted chars from string
+     *
+     * @param string $input
+     *
+     * @return string
+     */
+    private function cleanInputString(string $input): string
+    {
+        $input = preg_replace('/\s+|\(|\)|-|\+/', '', $input);
+        $input = filter_var($input, FILTER_SANITIZE_STRING);
+        return (string) $input;
     }
 }

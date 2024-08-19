@@ -13,7 +13,7 @@
         }],
         dom: 'lBfrtip',
         layout: {
-        topStart: 'buttons'
+            topStart: 'buttons'
         },
         // buttons: [{
         //         extend: 'copyHtml5',

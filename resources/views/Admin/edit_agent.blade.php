@@ -61,34 +61,42 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="phone">Phone Number</label>
-                                        <input class="form-control py-4" name="phone" type="tel" value="{{ $agent->phone_number }}" required />
+                                        <input class="form-control py-4" name="phone_number" id="phone_number" type="tel" value="{{ $agent_phone }}" required />
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block">Submit</button></div>
+                            <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-lg fa-edit"></i> Update</button></div>
+                            <!-- <div class="form-group mt-4 mb-0"><button class="btn btn-danger btn-block" onclick="(function () { window.replace(" {{ route('all.agents') }}"); })\"><i class="fa fa-xl fa-times"></i> Cancel</button></div> -->
 
                             <!-- Device Table -->
-                            <hr class="py-2" />
+                            <hr class="py-3" />
                             <div class="form-group">
-                                <label class="lg mb-1" for="phone">Assigned Devices</label>
+                                <div>
+                                    <h3>Assigned Devices</h3>
+                                </div>
+                                <hr class="py-3">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" name="dataTable" width="100%" cellspacing="0">
+                                    <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
                                                 <th>Device Name</th>
                                                 <th>Device Type</th>
                                                 <th>Product Code</th>
+                                                <th>Actions</th>
+                                                <th>ID</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            @foreach($out as $device)
+                                            @foreach($devices as $device)
                                             <tr>
                                                 <td>{{ $device['device_name'] }}</td>
                                                 <td>{{ $device['device_type'] }}</td>
                                                 <td>{{ $device['product_code'] }}</td>
+                                                <td><a href="{{ route('assign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
+                                                <td class="hidden">{{$device['device_id']}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -109,9 +117,26 @@
 @section('script')
 <!-- Document on ready function -->
 <script>
-    // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#dataTable').DataTable();
+
+        // Call the dataTables jQuery plugin
+        let table = $('#dataTable').DataTable({
+            columnDefs: [{
+                target: 4,
+                visible: false
+            }]
+        });
+
+        // // Make rows clickable to assign device endpoint
+        // table.on('click', 'tbody tr',
+        //     function() {
+        //         let data = table.row(this).data();
+
+        //         window.location.replace("{{ route('assign.device', " + data[4] + ") }}");
+        //     }
+
+        // );
     });
 </script>
+
 @endsection

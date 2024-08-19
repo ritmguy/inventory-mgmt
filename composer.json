@@ -15,7 +15,8 @@
         "laravel/framework": "^8.12",
         "laravel/telescope": "^5.2",
         "laravel/tinker": "^2.5",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "propaganistas/laravel-phone": "^4.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

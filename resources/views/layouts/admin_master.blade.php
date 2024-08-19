@@ -23,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/vfs_fonts.js"></script>
     <script src="{{ asset('backend') }}/js/sidenav-scripts.js"></script>
+    <script src="{{ asset('frontend') }}/js/main.js"></script>
 
 
     <!-- Styles -->
