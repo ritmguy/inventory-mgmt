@@ -95,7 +95,7 @@
                                                 <td>{{ $device['device_name'] }}</td>
                                                 <td>{{ $device['device_type'] }}</td>
                                                 <td>{{ $device['product_code'] }}</td>
-                                                <td><a href="{{ route('assign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
+                                                <td><a href="{{ route('unassign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
                                                 <td class="hidden">{{$device['device_id']}}</td>
                                             </tr>
                                             @endforeach

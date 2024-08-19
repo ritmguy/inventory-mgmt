@@ -17,6 +17,8 @@ use Illuminate\View\View;
 class DeviceController extends Controller
 {
 
+    private const CATEGORY = ['Laptop', 'Headset', 'Keyboard', 'Mouse'];
+
 
     /**
      * Get all devices from db for databale
@@ -101,6 +103,16 @@ class DeviceController extends Controller
         return view('Admin.edit_device')
             ->with('device', $device)
             ->with('product', $product);
+    }
+
+    /**
+     * Return view to add new product/model
+     *
+     * @return View
+     */
+    public function addNewProduct(): View
+    {
+        return view('Admin.add_product')->with('category', self::CATEGORY);
     }
 
     /**
@@ -208,6 +220,79 @@ class DeviceController extends Controller
             error_log('UpdateDevice Exception: ' . $e->getMessage());
             return redirect()->back()->with('results', json_encode(['exception' => $e->getMessage()]));
         }
+    }
+
+    /**
+     * Unassign device from agent
+     *
+     * @param Request $request
+     * @param string  $id
+     *
+     * @return RedirectResponse
+     */
+    public function unassign(Request $request, string $id): RedirectResponse
+    {
+        try {
+            $device = Device::where('unique_id', $id)->get()->first();
+            $agent = Agent::find($device['agent_id']);
+
+            Device::where('unique_id', $id)
+                ->update([
+                    'is_assigned' => false
+                ]);
+
+            // Log Event
+            $this->log('unassign_device', [
+                'device' => [
+                    'unique_id' => $id,
+                    'device_name' => $device['name'] ?? '',
+                    'is_assigned' => false,
+                ],
+                'agent' => [
+                    'previous_agent_id' => $agent['id'],
+                    'agent_fname' => $agent['first_name'],
+                    'agent_lname' => $agent['last_name']
+                ]
+            ]);
+            return redirect()->route('all.devices')->with('results', []);
+        } catch (Exception $e) {
+            error_log('UnassignDevice Exception: ' . $e->getMessage());
+            return redirect()->back()->with('results', json_encode(['exception' => $e->getMessage()]));
+        }
+    }
+
+    /**
+     * Create new product/device model in table
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function addProduct(Request $request): RedirectResponse
+    {
+
+        Product::create(
+            [
+                'product_code' => $request->input('code'),
+                'name' => $request->input('name'),
+                'category' => $request->input('category'),
+                'stock' => 0,
+                'unit_price' => $request->input('unit_cost'),
+                'sales_unit_price' => 0
+            ]
+        );
+
+        // Log Event
+        $this->log('add_product', [
+            'device' => [
+                'product_code' => $request->input('code'),
+                'name' => $request->input('name'),
+                'category' => $request->input('category'),
+                'unit_price' => $request->input('unit_cost'),
+            ],
+            'agent' => []
+        ]);
+        return redirect()->route('all.devices')->with('results', []);
     }
 
     /**

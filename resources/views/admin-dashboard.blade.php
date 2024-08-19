@@ -79,7 +79,7 @@
                         <thead>
                             <tr>
                                 <th>Type</th>
-                                <th>User ID</th>
+                                <th>User</th>
                                 <th>Notes</th>
                                 <th>Last Update</th>
                             </tr>
@@ -88,9 +88,9 @@
                             @foreach($transactions as $action)
                             <tr>
                                 <td>{{ $action->transaction_type }}</td>
-                                <td>{{ $action->user_id }}</td>
+                                <td>{{ $action->user_name }}</td>
                                 <td>{{ $action->notes }}</td>
-                                <td>{{ $action->updated_at }}</td>
+                                <td>{{ \Carbon\Carbon::parse($action->updated_at)->tz('America/New_York')->toDateTimeString() }}</td>
                             </tr>
                             @endforeach
 

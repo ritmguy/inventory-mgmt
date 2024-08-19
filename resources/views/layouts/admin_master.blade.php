@@ -87,6 +87,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
                                 <a class="nav-link" href="{{ route('add.device') }}">Add New Device</a>
+                                <a class="nav-link" href="{{ route('product.add') }}">Add New Product/Model</a>
                             </nav>
                         </div>
 
@@ -98,8 +99,6 @@
                         <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('all.agents') }}">All Agents</a>
-                            </nav>
-                            <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="{{ route('add.agent') }}">Add New Agent</a>
                             </nav>
                         </div>

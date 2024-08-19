@@ -35,7 +35,7 @@
                             <td><i class="fas fa-times text-danger"></i></td>
                             @endif
 
-                            <td>{{ $row['last_update'] }}</td>
+                            <td>{{ \Carbon\Carbon::parse($row['last_update'])->tz('America/New_York')->toDateTimeString() }}</td>
 
                             <td>
                                 <a href="{{ route('device.edit', $row['device_uuid']) }}" class="btn btn-sm btn-primary">Edit</a>

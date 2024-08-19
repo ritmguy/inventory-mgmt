@@ -31,7 +31,7 @@
                         <td>{{ $agent['address'] }}</td>
                         <td>{{ $agent['phone'] }}</td>
                         <td>{{ $agent['device_count'] }}</td>
-                        <td>{{ $agent['updated_at'] }}</td>
+                        <td>{{ \Carbon\Carbon::parse($agent['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
 
                         <td>
                             <a href=" {{ route('edit.agent', $agent['id']) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>

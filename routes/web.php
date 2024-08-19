@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AgentController;
@@ -50,6 +47,9 @@ Route::controller(DeviceController::class)->middleware(['auth'])->group(function
     Route::post('/device-assign', 'assign')->name('device.assign');
     Route::post('/create-device', 'create')->name('create.device');
     Route::post('/update-device', 'update')->name('edit.device');
+    Route::get('/unassign-device/{id}', 'unassign')->name('unassign.device');
+    Route::get('/add-new-product', 'addNewProduct')->name('product.add');
+    Route::post('/add-product', 'addProduct')->name('add.product');
 });
 
 // Agents
@@ -63,7 +63,7 @@ Route::controller(AgentController::class)->middleware(['auth'])->group(function 
 
 
 
-
+// Dashboard
 Route::get('/dashboard', function () {
 
     $deviceCounts = [];
@@ -85,7 +85,7 @@ Route::get('/dashboard', function () {
         ];
     }
 
-    $transactions = Transaction::select('transaction_type', 'user_id', 'users.name', 'notes', 'transactions.updated_at')
+    $transactions = Transaction::select('transaction_type', 'user_id', 'users.name as user_name', 'notes', 'transactions.updated_at')
         ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
         ->orderBy('updated_at', 'desc')
         ->limit(100)
