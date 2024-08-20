@@ -41,13 +41,13 @@
                                         <input class="form-control py-4" name="device_name" type="text" value="{{ $device->device_name }}" disabled />
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="small mb-1" for="inputFirstName">Current Assignment</label>
                                         @if($device['agent_id'] === null)
                                         <input class="form-control py-4" name="device_assignment" type="text" value="" placeholder="N/A" disabled />
                                         @else
-                                        <input class="form-control py-4" name="device_assignment" type="text" value="{{ $current_agent }}" placeholder="{{ $current_agent }}" disabled />
+                                        <input class="form-control py-4" name="device_assignment" type="text" value="{{ $current_agent->first_name . ' ' . $current_agent->last_name . ' - ' . $current_agent->id }}" disabled />
                                         @endif
                                     </div>
                                 </div>
@@ -58,7 +58,10 @@
                                         <label class="small mb-1" for="agent_id">Agent</label>
                                         <select class="form-control py-2" name="agent_id" required>
                                             @foreach($agents as $agent)
+                                            @if($agent->id === $device['agent_id'])
+                                            @else
                                             <option value="{{ $agent->id }}">{{ $agent->first_name . ' ' . $agent->last_name }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                         <input class="form-control" name="device_id" id="device_id" value="{{ $device->unique_id }}" hidden />
@@ -66,7 +69,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block">Submit</button></div>
+                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa-md fa fa-wand-sparkles"></i> Assign</button></div>
                         </form>
                     </div>
                     <div class="card-footer">
@@ -79,8 +82,8 @@
                                 <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Device Name</th>
-                                            <th>Device Type</th>
+                                            <th>Transaction Type</th>
+                                            <th>User</th>
                                             <th>Date</th>
                                         </tr>
                                     </thead>

@@ -60,11 +60,8 @@ class DeviceController extends Controller
 
         // Check for current assignment
         $currentAgentAr = Agent::find($device['agent_id']);
-        if (!empty($currentAgentAr) && $currentAgentAr !== null) {
-            $currentAgent = $currentAgentAr['first_name'] . ' ' . $currentAgentAr['last_name'] ?? null;
-        } else {
-            $currentAgent = '';
-        }
+
+        // Product
         $product = Product::find($device['product_id']);
 
         $history = $this->getDeviceHistory($id);
@@ -73,7 +70,7 @@ class DeviceController extends Controller
             ->with('device', $device)
             ->with('agents', $agents)
             ->with('product', $product)
-            ->with('current_agent', $currentAgent)
+            ->with('current_agent', $currentAgentAr)
             ->with('history', $history);
     }
 
@@ -101,10 +98,16 @@ class DeviceController extends Controller
     {
         $device = Device::where('unique_id', $id)->first();
         $product = Product::find($device['product_id']);
+        $history = $this->getDeviceHistory($id);
+
+        // Check for current assignment
+        $currentAgentAr = Agent::find($device['agent_id']);
 
         return view('Admin.edit_device')
             ->with('device', $device)
-            ->with('product', $product);
+            ->with('product', $product)
+            ->with('history', $history)
+            ->with('current_agent', $currentAgentAr);
     }
 
     /**

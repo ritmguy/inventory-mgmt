@@ -48,22 +48,7 @@
 </div>
 @endsection
 @section('script')
-<script>
-    $(document).ready(function() {
-
-        // Call the dataTables jQuery plugin
-        $('#dataTable').DataTable();
-
-        // // Make rows clickable to assign device endpoint
-        // table.on('click', 'tbody tr',
-        //     function() {
-        //         let data = table.row(this).data();
-
-        //         window.location.replace("{{ route('edit.agent', $agent['id']) }}");
-        //     }
-
-        // );
-    });
+<script src="{{ asset('backend')}}/js/table-config.js">
 </script>
 
 @endsection
