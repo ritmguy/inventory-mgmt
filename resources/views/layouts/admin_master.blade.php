@@ -28,6 +28,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('backend') }}/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('frontend') }}/fonts/material-icon/css/material-design-iconic-font.min.css">
     <link href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css" rel="stylesheet" />
@@ -44,7 +45,7 @@
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    <button class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
@@ -58,8 +59,7 @@
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <!-- <a class="dropdown-item" href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">Logout</a> -->
-                        <a class="dropdown-item"><button class="btn btn-danger text-white" onclick="event.preventDefault(); this.closest('form').submit();">Logout</button></a>
+                        <a class="dropdown-item"><button class="btn btn-sm btn-danger text-white" onclick="event.preventDefault(); this.closest('form').submit();">Logout</button></a>
                     </form>
 
                 </div>
@@ -71,30 +71,19 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+                        <div class="sb-sidenav-menu-heading">Core</div>
                         <a class="nav-link" href="{{ route('dashboard') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fas-duotone fa-house-user"></i></div>
                             Dashboard
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
 
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Devices
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
-                                <a class="nav-link" href="{{ route('add.device') }}">Add New Device</a>
-                                <a class="nav-link" href="{{ route('product.add') }}">Add New Product/Model</a>
-                            </nav>
-                        </div>
 
+                        <!-- Agents -->
+                        <div class="sb-sidenav-menu-heading">Agent Management</div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAuthentication" aria-expanded="false" aria-controls="collapseAuthentication">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-solid fa-person"></i></div>
                             Agents
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <div class="sb-sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseAuthentication" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
@@ -102,6 +91,32 @@
                                 <a class="nav-link" href="{{ route('add.agent') }}">Add New Agent</a>
                             </nav>
                         </div>
+
+                        <div class="sb-sidenav-menu-heading">Device Management</div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDevices" aria-expanded="false" aria-controls="collapseDevices">
+                            <div class="sb-nav-link-icon"><i class="fa-sharp fa-laptop"></i></div>
+                            Devices
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseDevices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('all.devices') }}">All Devices</a>
+                                <a class="nav-link" href="{{ route('add.device') }}">Add New Device</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <div class="sb-nav-link-icon"><i class="fa fa-tablet-screen-button"></i></div>
+                            Products/Models
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('all.products') }}">All Products</a>
+                                <a class="nav-link" href="{{ route('product.add') }}">Add New Product/Model</a>
+                            </nav>
+                        </div>
+
+
 
                     </div>
             </nav>

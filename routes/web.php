@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AgentController;
 use Illuminate\Http\Request;
@@ -32,11 +31,12 @@ Route::controller(DeviceController::class)->middleware(['auth'])->group(function
     Route::get('/assign-device/{id}', 'assignNewDevice')->name('assign.device');
     Route::get('/device-edit/{id}', 'editDevice')->name('device.edit');
     Route::get('/add-device', 'addDevice')->name('add.device');
+    Route::get('/unassign-device/{id}', 'unassign')->name('unassign.device');
+    Route::get('/add-new-product', 'addNewProduct')->name('product.add');
+    Route::get('/all-products', 'getAllProducts')->name('all.products');
     Route::post('/device-assign', 'assign')->name('device.assign');
     Route::post('/create-device', 'create')->name('create.device');
     Route::post('/update-device', 'update')->name('edit.device');
-    Route::get('/unassign-device/{id}', 'unassign')->name('unassign.device');
-    Route::get('/add-new-product', 'addNewProduct')->name('product.add');
     Route::post('/add-product', 'addProduct')->name('add.product');
 });
 

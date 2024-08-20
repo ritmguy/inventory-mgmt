@@ -25,20 +25,20 @@
                 </thead>
                 <tbody>
                     @foreach($agents as $agent)
+                    <a href=" {{ route('edit.agent', $agent['id']) }}">
+                        <tr class="position-relative">
+                            <td>{{ $agent['name'] }}</td>
+                            <td>{{ $agent['address'] }}</td>
+                            <td>{{ $agent['phone'] }}</td>
+                            <td>{{ $agent['device_count'] }}</td>
+                            <td>{{ \Carbon\Carbon::parse($agent['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
 
-                    <tr class="position-relative">
-                        <td>{{ $agent['name'] }}</td>
-                        <td>{{ $agent['address'] }}</td>
-                        <td>{{ $agent['phone'] }}</td>
-                        <td>{{ $agent['device_count'] }}</td>
-                        <td>{{ \Carbon\Carbon::parse($agent['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
-
-                        <td>
-                            <a href=" {{ route('edit.agent', $agent['id']) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
-                            <!-- <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Delete</a> -->
-                        </td>
-                    </tr>
-
+                            <td>
+                                <a href=" {{ route('edit.agent', $agent['id']) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Edit</a>
+                                <!-- <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Delete</a> -->
+                            </td>
+                        </tr>
+                    </a>
                     @endforeach
 
                 </tbody>
@@ -52,17 +52,17 @@
     $(document).ready(function() {
 
         // Call the dataTables jQuery plugin
-        let table = $('#dataTable').DataTable();
+        $('#dataTable').DataTable();
 
-        // Make rows clickable to assign device endpoint
-        table.on('click', 'tbody tr',
-            function() {
-                let data = table.row(this).data();
+        // // Make rows clickable to assign device endpoint
+        // table.on('click', 'tbody tr',
+        //     function() {
+        //         let data = table.row(this).data();
 
-                window.location.replace("{{ route('edit.agent', $agent['id']) }}");
-            }
+        //         window.location.replace("{{ route('edit.agent', $agent['id']) }}");
+        //     }
 
-        );
+        // );
     });
 </script>
 

@@ -17,9 +17,9 @@
 
                             <div class="col-xs-2 px-4 py-4">
                                 @foreach($devices as $device)
-                                @if($device['category'] != 'Laptops')
+                                @if($device['category'] !== 'Laptop')
                                 @else
-                                <div class="card text-dark mb-4 px-4 py-2">
+                                <div class="card text-dark mb-2 px-4 py-2 align-items-left">
 
                                     <h4 class="text-gray">{{ $device['name'] }} - {{ $device['code'] }}</h4>
                                     {{ $device['assigned'] }} Assigned / {{ $device['unassigned'] }} Unassigned
@@ -45,10 +45,10 @@
 
                             <div class="col-xs-2 px-4 py-4">
                                 @foreach($devices as $device)
-                                @if($device['category'] != 'Headset')
+                                @if($device['category'] !== 'Headset')
 
                                 @else
-                                <div class="card text-dark mb-4 px-4 py-2">
+                                <div class="card text-dark mb-2 px-4 py-2 align-items-left">
 
                                     <h4 class="text-gray">{{ $device['name'] }} - {{ $device['code'] }}</h4>
                                     {{ $device['assigned'] }} Assigned / {{ $device['unassigned'] }} Unassigned

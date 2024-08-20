@@ -17,7 +17,7 @@ use Illuminate\View\View;
 class DeviceController extends Controller
 {
 
-    private const CATEGORY = ['Laptop', 'Headset', 'Keyboard', 'Mouse'];
+    private const PRODUCT_CATEGORY = ['Laptop', 'Headset', 'Keyboard', 'Mouse'];
 
 
     /**
@@ -27,12 +27,13 @@ class DeviceController extends Controller
      */
     public function allDevices(): View
     {
-        $devices = [];
-        $rs = Device::select(
+
+        $devices = Device::select(
             'products.product_code',
             'device_name',
             'device_status',
             'is_assigned',
+            'category',
             'devices.updated_at as last_update',
             'unique_id'
         )
@@ -40,17 +41,6 @@ class DeviceController extends Controller
             ->orderBy('devices.updated_at', 'desc')
             ->get();
 
-        foreach ($rs as $device) {
-            $lastUpdate = Carbon::parse($device['last_update'], 'America/New_York');
-            $devices[] = [
-                'device_uuid' => $device['unique_id'],
-                'product_code' => $device['product_code'],
-                'device_name' => $device['device_name'],
-                'device_status' => $device['device_status'],
-                'is_assigned' => $device['is_assigned'],
-                'last_update' =>  $lastUpdate !== '' ? $lastUpdate->toDateTimeString() : null,
-            ];
-        }
 
         return view('Admin.all_devices')->with('devices', $devices);
     }
@@ -67,12 +57,24 @@ class DeviceController extends Controller
     {
         $device = Device::where('unique_id', $id)->first();
         $agents = Agent::all();
+
+        // Check for current assignment
+        $currentAgentAr = Agent::find($device['agent_id']);
+        if (!empty($currentAgentAr) && $currentAgentAr !== null) {
+            $currentAgent = $currentAgentAr['first_name'] . ' ' . $currentAgentAr['last_name'] ?? null;
+        } else {
+            $currentAgent = '';
+        }
         $product = Product::find($device['product_id']);
+
+        $history = $this->getDeviceHistory($id);
 
         return view('Admin.assign_device')
             ->with('device', $device)
             ->with('agents', $agents)
-            ->with('product', $product);
+            ->with('product', $product)
+            ->with('current_agent', $currentAgent)
+            ->with('history', $history);
     }
 
     /**
@@ -112,7 +114,40 @@ class DeviceController extends Controller
      */
     public function addNewProduct(): View
     {
-        return view('Admin.add_product')->with('category', self::CATEGORY);
+        return view('Admin.add_product')->with('category', self::PRODUCT_CATEGORY);
+    }
+
+    /**
+     * Return view of all products
+     *
+     * @return View
+     */
+    public function getAllProducts(): View
+    {
+        $productCounts = [];
+
+        $devices = Device::selectRaw('product_id,
+        count(*) as total_count,
+        sum(case when is_assigned=1 then 1 else 0 end) as assigned, 
+        sum(case when is_assigned=0 then 1 else 0 end) as unassigned')
+            ->groupBy('product_id')
+            ->get();
+
+        foreach ($devices as $device) {
+            $prod = Product::find($device['product_id']);
+            $productCounts[] = [
+                'category' => $prod->category,
+                'name' => $prod->name,
+                'code' => $prod->product_code,
+                'assigned' => $device->assigned,
+                'unassigned' => $device->unassigned,
+                'totals' => $device->total_count,
+                'last_update' => Carbon::parse($prod->updated_at)->tz('America/New_York')->toDateTimeString(),
+            ];
+        }
+
+        return view('Admin.all_products')
+            ->with('products', $productCounts);
     }
 
     /**
@@ -131,6 +166,7 @@ class DeviceController extends Controller
                 ->update([
                     'is_assigned' => true,
                     'agent_id' => $request->input('agent_id'),
+                    'device_status' => 'assigned'
 
                 ]);
 
@@ -139,6 +175,7 @@ class DeviceController extends Controller
                 'device' => [
                     'unique_id' => $request->input('device_id'),
                     'is_assigned' => true,
+                    'devcie_status' => 'assigned'
                 ],
                 'agent' => [
                     'agent_id' => $request->input('agent_id'),
@@ -238,7 +275,9 @@ class DeviceController extends Controller
 
             Device::where('unique_id', $id)
                 ->update([
-                    'is_assigned' => false
+                    'is_assigned' => false,
+                    'agent_id' => null,
+                    'device_status' => 'instock'
                 ]);
 
             // Log Event
@@ -247,6 +286,7 @@ class DeviceController extends Controller
                     'unique_id' => $id,
                     'device_name' => $device['name'] ?? '',
                     'is_assigned' => false,
+                    'device_status' => 'instock'
                 ],
                 'agent' => [
                     'previous_agent_id' => $agent['id'],
@@ -295,6 +335,17 @@ class DeviceController extends Controller
         return redirect()->route('all.devices')->with('results', []);
     }
 
+    private function getDeviceHistory(string $id): array
+    {
+        $logs = Log::where('transactions.notes->device->unique_id', $id)
+            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->orderBy('transactions.created_at', 'desc')
+            ->limit(25)
+            ->get()
+            ->toArray();
+
+        return $logs;
+    }
     /**
      * Log Event
      *

@@ -70,41 +70,42 @@
                             <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-lg fa-edit"></i> Update</button></div>
                             <!-- <div class="form-group mt-4 mb-0"><button class="btn btn-danger btn-block" onclick="(function () { window.replace(" {{ route('all.agents') }}"); })\"><i class="fa fa-xl fa-times"></i> Cancel</button></div> -->
 
-                            <!-- Device Table -->
-                            <hr class="py-3" />
-                            <div class="form-group">
-                                <div>
-                                    <h3>Assigned Devices</h3>
-                                </div>
-                                <hr class="py-3">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Device Name</th>
-                                                <th>Device Type</th>
-                                                <th>Product Code</th>
-                                                <th>Actions</th>
-                                                <th>ID</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            @foreach($devices as $device)
-                                            <tr>
-                                                <td>{{ $device['device_name'] }}</td>
-                                                <td>{{ $device['device_type'] }}</td>
-                                                <td>{{ $device['product_code'] }}</td>
-                                                <td><a href="{{ route('unassign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
-                                                <td class="hidden">{{$device['device_id']}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
                         </form>
+                    </div>
+                    <div class="card-footer">
+                        <!-- Device Table -->
+
+                        <div class="form-group">
+                            <div>
+                                <h3 class="text-center font-weight-light my-4">Assigned Devices</h3>
+                            </div>
+                            <hr class="py-3">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Device Name</th>
+                                            <th>Device Type</th>
+                                            <th>Product Code</th>
+                                            <th>Actions</th>
+                                            <th>ID</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach($devices as $device)
+                                        <tr>
+                                            <td>{{ $device['device_name'] }}</td>
+                                            <td>{{ $device['device_type'] }}</td>
+                                            <td>{{ $device['product_code'] }}</td>
+                                            <td><a href="{{ route('unassign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
+                                            <td class="hidden">{{$device['device_id']}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

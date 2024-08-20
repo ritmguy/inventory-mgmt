@@ -5,13 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inventory-Management-System</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="{{ asset('frontend') }}/css/style.css">
+
 </head>
 
 <body>
@@ -31,7 +33,7 @@
                         <form method="POST" action="{{ route('login') }}" class="register-form" id="login-form">
                             @csrf
                             <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <label for="email"><i class="zmdi zmdi-account-circle material-icons-name"></i></label>
                                 <input type="email" name="email" id="email" placeholder="Email" required="" />
                             </div>
                             <div class="form-group">
