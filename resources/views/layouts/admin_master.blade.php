@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="utf-8" />
@@ -17,6 +17,7 @@
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js" />
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.jqueryui.js" />
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap4.min.js" />
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js" />
     <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -38,8 +39,9 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+        <!-- <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>-->
         <a class="navbar-brand">{{ config('app.name', 'Laravel') }}</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">

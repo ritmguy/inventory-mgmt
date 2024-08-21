@@ -6,13 +6,18 @@
     <li class="breadcrumb-item active">All Agents</li>
 </ol>
 <div class="card mb-4">
-    <div class="card-header">
-        <i class="fas fa-contact-card" aria-hidden="true"></i>
-        All Agents
+    <div class="card-header d-flex align-items-center justify-content-between">
+        <div>
+            <i class="fas fa-contact-card" aria-hidden="true"></i>
+            All Agents
+        </div>
+        <div>
+            <a href="{{ route('add.agent') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Create Agent</a>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-hover table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Name</th>

@@ -6,13 +6,18 @@
         <li class="breadcrumb-item active">All Products and Product Models</li>
     </ol>
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa fa-tablet-screen-button mr-1"></i>
-            Products
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <div>
+                <i class="fa fa-tablet-screen-button mr-1"></i>
+                Products
+            </div>
+            <div>
+                <a href="{{ route('add.device') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Add Product</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-hover table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Device Name</th>

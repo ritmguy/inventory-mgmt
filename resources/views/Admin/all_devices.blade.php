@@ -6,13 +6,18 @@
         <li class="breadcrumb-item active">All Devices</li>
     </ol>
     <div class="card mb-4">
-        <div class="card-header">
-            <i class="fa-sharp fa-laptop mr-1"></i>
-            Device List
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <div>
+                <i class="fas fa-laptop" aria-hidden="true"></i>
+                Device List
+            </div>
+            <div>
+                <a href="{{ route('add.device') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Add New Device</a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-sm table-bordered table-hover table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Device Type/Category</th>
@@ -37,12 +42,12 @@
                             <td><i class="fas fa-times text-danger"></i></td>
                             @endif
 
-                            <td>{{ \Carbon\Carbon::parse($row['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
+                            <td>{{ \Carbon\Carbon::parse($row['last_update'])->tz('America/New_York')->toDateTimeString() }}</td>
 
                             <td>
-                                <a href="{{ route('device.edit', $row['unique_id']) }}" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                <a href="{{ route('assign.device', $row['unique_id']) }}" class="btn btn-sm btn-success">Re-Assign</a>
+                                <a href="{{ route('device.edit', $row['unique_id']) }}" class="btn btn-sm btn-primary"><i class="fa fa-md fa-edit"></i> Edit</a>
+                                <!-- <a href="#" class="btn btn-sm btn-danger">Delete</a> -->
+                                <a href="{{ route('assign.device', $row['unique_id']) }}" class="btn btn-sm btn-success"><i class="fa fa-md fa-wand-sparkles"></i> Re-Assign</a>
                             </td>
                         </tr>
                         @endforeach
@@ -61,8 +66,13 @@
         // Call the dataTables jQuery plugin
         $('#dataTable').DataTable({
             order: [
-                [1, 'asc']
-            ]
+                [1, 'asc'],
+                [5, 'desc']
+            ],
+            columnDefs: [{
+                targets: [3, 4],
+                className: 'dt-center'
+            }],
         });
 
 

@@ -17,11 +17,11 @@ class CreateAgentsTable extends Migration
             $table->id();
             $table->string('first_name', 50);
             $table->string('last_name', 75);
-            $table->string('address1');
+            $table->string('address1')->nullable();
             $table->string('address2')->nullable();
-            $table->string('address_city');
-            $table->string('address_state', 5);
-            $table->string('address_zip', 11);
+            $table->string('address_city')->nullable();
+            $table->string('address_state', 5)->nullable();
+            $table->string('address_zip', 11)->nullable();
             $table->string('phone_number', 15)->index();
             $table->boolean('is_active')->default(false);
             $table->timestamps();

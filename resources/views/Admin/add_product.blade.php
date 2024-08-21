@@ -55,6 +55,9 @@
 
                             <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fas fa-plus"></i> Add Product</button></div>
                         </form>
+                        <div class="form-group mt-4 mb-0">
+                            <a href="{{ route('all.products') }}" class="btn btn-danger btn-block"><i class="fa fa-md fa-ban"></i> Cancel</a>
+                        </div>
                     </div>
                 </div>
             </div>

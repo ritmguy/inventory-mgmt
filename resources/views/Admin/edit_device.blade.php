@@ -61,8 +61,8 @@
                             <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa-md fa-solid fa-edit"></i> Edit</button></div>
                         </form>
                         <div class=" form-group mt-4 mb-0">
-                            <a href="{{ route('assign.device', $device->unique_id) }}">
-                                <button class="btn btn-success btn-block"><i class="fa-md fa-solid fa-edit"></i> Re-Assign</button>
+                            <a href="{{ route('assign.device', $device->unique_id) }}" class="btn btn-success btn-block">
+                                <i class="fa-md fa-solid fa-edit"></i> Re-Assign
                             </a>
                         </div>
                     </div>

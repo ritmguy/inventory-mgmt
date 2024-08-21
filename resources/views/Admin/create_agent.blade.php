@@ -31,7 +31,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="small mb-1" for="address1">Address</label>
-                                        <input class="form-control py-4" name="address1" type="text" value="" placeholder="Address" required />
+                                        <input class="form-control py-4" name="address1" type="text" value="" placeholder="Address" />
                                     </div>
                                 </div>
                                 <div class="col-md-10">
@@ -43,19 +43,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="small mb-1" for="address_city">City</label>
-                                        <input class="form-control py-4" name="address_city" type="text" value="" placeholder="City" required />
+                                        <input class="form-control py-4" name="address_city" type="text" value="" placeholder="City" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="small mb-1" for="address_state">State</label>
-                                        <input class="form-control py-4" name="address_state" type="text" value="" maxlength=2 placeholder="State" required />
+                                        <input class="form-control py-4" name="address_state" type="text" value="" maxlength=2 placeholder="State" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="small mb-1" for="address_zip">Zip Code</label>
-                                        <input class="form-control py-4" name="address_zip" type="text" value="" maxlength=5 placeholder="Zip Code" required />
+                                        <input class="form-control py-4" name="address_zip" type="text" value="" maxlength=5 placeholder="Zip Code" />
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -67,10 +67,11 @@
                             </div>
 
 
-                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-lg fa-plus"></i> Add Agent</button></div>
-                            <div class="form-group mt-4 mb-0"><button class="btn btn-danger btn-block"><i class="fa fa-xl fa-times"></i> Cancel</button></div>
-
+                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-md fa-plus"></i> Add Agent</button></div>
                         </form>
+                        <div class="form-group mt-4 mb-0">
+                            <a href="{{ route('all.agents') }}" class="btn btn-danger btn-block"><i class="fa fa-md fa-ban"></i> Cancel</a>
+                        </div>
                     </div>
                 </div>
             </div>

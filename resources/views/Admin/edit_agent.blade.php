@@ -67,7 +67,7 @@
                             </div>
 
 
-                            <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-lg fa-edit"></i> Update</button></div>
+                            <div class=" form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa fa-md fa-edit"></i> Update</button></div>
                             <!-- <div class="form-group mt-4 mb-0"><button class="btn btn-danger btn-block" onclick="(function () { window.replace(" {{ route('all.agents') }}"); })\"><i class="fa fa-xl fa-times"></i> Cancel</button></div> -->
 
                         </form>
@@ -98,7 +98,7 @@
                                             <td>{{ $device['device_name'] }}</td>
                                             <td>{{ $device['device_type'] }}</td>
                                             <td>{{ $device['product_code'] }}</td>
-                                            <td><a href="{{ route('unassign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-xl fa-times"></i> Un-Assign</a>
+                                            <td><a href="{{ route('unassign.device', $device['device_id']) }}" class="btn btn-sm btn-danger"><i class="fa fa-md fa-times"></i> Un-Assign</a>
                                             <td class="hidden">{{$device['device_id']}}</td>
                                         </tr>
                                         @endforeach
@@ -127,16 +127,6 @@
                 visible: false
             }]
         });
-
-        // // Make rows clickable to assign device endpoint
-        // table.on('click', 'tbody tr',
-        //     function() {
-        //         let data = table.row(this).data();
-
-        //         window.location.replace("{{ route('assign.device', " + data[4] + ") }}");
-        //     }
-
-        // );
     });
 </script>
 

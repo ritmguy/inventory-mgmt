@@ -139,11 +139,11 @@ class AgentController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'phone_number' => $phone,
-            'address1' => $request->input('address1'),
-            'address2' => $request->input('address2'),
-            'address_city' => $request->input('address_city'),
-            'address_state' => $request->input('address_state'),
-            'address_zip' => $request->input('address_zip')
+            'address1' => $request->input('address1') ?? null,
+            'address2' => $request->input('address2') ?? null,
+            'address_city' => $request->input('address_city') ?? null,
+            'address_state' => $request->input('address_state') ?? null,
+            'address_zip' => $request->input('address_zip') ?? null
         ];
 
         Agent::create($data);

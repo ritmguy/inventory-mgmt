@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class DeviceController extends Controller
 {
@@ -127,25 +128,27 @@ class DeviceController extends Controller
      */
     public function getAllProducts(): View
     {
+
         $productCounts = [];
 
-        $devices = Device::selectRaw('product_id,
-        count(*) as total_count,
-        sum(case when is_assigned=1 then 1 else 0 end) as assigned, 
-        sum(case when is_assigned=0 then 1 else 0 end) as unassigned')
-            ->groupBy('product_id')
-            ->get();
+        $products = Product::all();
+        foreach ($products as $prod) {
 
-        foreach ($devices as $device) {
-            $prod = Product::find($device['product_id']);
+            $devices = Device::selectRaw('product_id, count(product_id) as total_count,
+                sum(case when is_assigned=1 then 1 else 0 end) as assigned, 
+                sum(case when is_assigned=0 then 1 else 0 end) as unassigned')
+                ->where('product_id', $prod['id'])
+                ->groupBy('product_id')
+                ->get();
+
             $productCounts[] = [
-                'category' => $prod->category,
-                'name' => $prod->name,
-                'code' => $prod->product_code,
-                'assigned' => $device->assigned,
-                'unassigned' => $device->unassigned,
-                'totals' => $device->total_count,
-                'last_update' => Carbon::parse($prod->updated_at)->tz('America/New_York')->toDateTimeString(),
+                'category' => $prod['category'],
+                'name' => $prod['name'],
+                'code' => $prod['product_code'],
+                'assigned' => $devices[0]['assigned'] ?? 0,
+                'unassigned' => $devices[0]['unassigned'] ?? 0,
+                'totals' => $devices[0]['total_count'] ?? 0,
+                'last_update' => Carbon::parse($prod['updated_at'])->tz('America/New_York')->toDateTimeString(),
             ];
         }
 
