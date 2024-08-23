@@ -36,7 +36,7 @@ Dockerfile is included for quick turn up.
 
 - Docker:
         ```
-        docker build -t ims:latest . && \ docker run --env-file .env -d -t -p 8080:8080 -name ims ims:latest
+        docker build -t ims:latest . && docker run --env-file .env -d -t -p 8080:8080 -name ims ims:latest
         ```
 
 
