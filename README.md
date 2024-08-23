@@ -2,6 +2,11 @@
 <h1 align="center">Laravel based Inventory Management System</h1>
 <hr>
 
+## Requirements
+- PHP 8.0 | PHP 8.1
+- Debian 11.x
+
+Dockerfile is included for quick turn up.
 
 ## Quick Installation
 
