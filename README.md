@@ -3,7 +3,7 @@
 <hr>
 
 ## Requirements
-- PHP 8.0 | PHP 8.1
+- PHP 8.0|8.1|8.2
 - Debian 11.x
 
 Dockerfile is included for quick turn up.
@@ -19,17 +19,20 @@ Dockerfile is included for quick turn up.
     composer update
     
     
-### For Environment Variable Create
+### Create Environment Variable File
  
     cp .env.example .env
- 
+- Make sure to replace variables with correct configs 
     
-### For Migration table in database [Create database name as ```IMS```]
+### Migrate database tables
  
     php artisan migrate
     
-### Server ON ```url: http://127.0.0.1:8000/```
+### Server ON ```url: http://127.0.0.1:8080/```
 
-    php artisan serve
+    php artisan serve --port 8080
+
+    docker build -t ims:latest . && \
+    docker run --env-file .env -d -t -p 8080:8080 -name ims ims:lates
 
 
