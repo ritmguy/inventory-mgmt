@@ -30,10 +30,10 @@ Dockerfile is included for quick turn up.
     
 ### Server ON ```url: http://127.0.0.1:8080/```
 - Artisan:
-    php artisan serve --port 8080
+        php artisan serve --port 8080
 
 - Docker:
-    docker build -t ims:latest . && \
-    docker run --env-file .env -d -t -p 8080:8080 -name ims ims:lates
+        docker build -t ims:latest . && \
+        docker run --env-file .env -d -t -p 8080:8080 -name ims ims:lates
 
 
