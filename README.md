@@ -29,7 +29,7 @@ Dockerfile is included for quick turn up.
  
     php artisan migrate
     
-### Server ON ```url: http://127.0.0.1:8080/```
+### Server Up
 - Artisan:
         ```
         php artisan serve --port 8080
@@ -39,5 +39,5 @@ Dockerfile is included for quick turn up.
         ```
         docker build -t ims:latest . && docker run --env-file .env -d -t -p 8080:8080 -name ims ims:latest
         ```
-
+- Connect: ```http://127.0.0.1:8080/```
 
