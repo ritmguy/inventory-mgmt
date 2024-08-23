@@ -8,18 +8,19 @@
 <div class="card mb-4">
     <div class="card-header d-flex align-items-center justify-content-between">
         <div>
-            <i class="fas fa-contact-card" aria-hidden="true"></i>
+            <i class="fa fa-person" aria-hidden="true"></i>
             All Agents
         </div>
         <div>
-            <a href="{{ route('add.agent') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Create Agent</a>
+            <a href="{{ route('add.agent') }}" class="btn btn-md btn-info"><i class="fa fa-md fa-plus"></i> Create Agent</a>
         </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-hover table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
+            <table class="table display" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>Address</th>
                         <th>Phone</th>
@@ -32,6 +33,7 @@
                     @foreach($agents as $agent)
                     <a href=" {{ route('edit.agent', $agent['id']) }}">
                         <tr class="position-relative">
+                            <td></td>
                             <td>{{ $agent['name'] }}</td>
                             <td>{{ $agent['address'] }}</td>
                             <td>{{ $agent['phone'] }}</td>
@@ -53,7 +55,27 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('backend')}}/js/table-config.js">
+<script>
+    $(document).ready(function() {
+
+        // Call the dataTables jQuery plugin
+        $('#dataTable').DataTable({
+            order: [
+                [1, 'asc'],
+                [5, 'desc']
+            ],
+            columnDefs: [{
+                orderable: false,
+                render: DataTable.render.select(),
+                targets: 0
+            }],
+            select: {
+                style: 'multi'
+            },
+        });
+
+
+    });
 </script>
 
 @endsection

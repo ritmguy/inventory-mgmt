@@ -69,7 +69,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block"><i class="fa-md fa fa-wand-sparkles"></i> Assign</button></div>
+                            <div class="form-group form-button mt-4 mb-0"><button class="btn btn-block btn-success"><i class="fa-md fa fa-wand-sparkles"></i> Assign</button></div>
                         </form>
                     </div>
                     <div class="card-footer">

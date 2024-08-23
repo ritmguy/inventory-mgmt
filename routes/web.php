@@ -3,10 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\ConsoleController;
 use Illuminate\Http\Request;
-use App\Models\Device;
-use App\Models\Product;
-use App\Models\Transaction;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +36,7 @@ Route::controller(DeviceController::class)->middleware(['auth'])->group(function
     Route::post('/create-device', 'create')->name('create.device');
     Route::post('/update-device', 'update')->name('edit.device');
     Route::post('/add-product', 'addProduct')->name('add.product');
+    Route::post('/add-device-note', 'addNote')->name('add.device.note');
 });
 
 // Agents
@@ -52,36 +51,12 @@ Route::controller(AgentController::class)->middleware(['auth'])->group(function 
 
 
 // Dashboard
-Route::get('/dashboard', function () {
+Route::controller(ConsoleController::class)->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/add-new-status', 'addStatusView')->name('add.status.view');
+    Route::get('/all-statuses', 'allStatuses')->name('all.statuses');
+    Route::post('/add-status', 'createStatus')->name('add.status');
+});
 
-    $deviceCounts = [];
-
-    $devices = Device::selectRaw('product_id,
-    sum(case when is_assigned=1 then 1 else 0 end) as assigned, 
-    sum(case when is_assigned=0 then 1 else 0 end) as unassigned')
-        ->groupBy('product_id')
-        ->get();
-
-    foreach ($devices as $device) {
-        $prod = Product::find($device['product_id']);
-        $deviceCounts[] = [
-            'category' => $prod->category,
-            'name' => $prod->name,
-            'code' => $prod->product_code,
-            'assigned' => $device->assigned,
-            'unassigned' => $device->unassigned
-        ];
-    }
-
-    $transactions = Transaction::select('transaction_type', 'user_id', 'users.name as user_name', 'notes', 'transactions.updated_at')
-        ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-        ->orderBy('updated_at', 'desc')
-        ->limit(100)
-        ->get();
-
-    return view('admin-dashboard')
-        ->with('transactions', $transactions)
-        ->with('devices', $deviceCounts);
-})->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';

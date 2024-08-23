@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -10,19 +10,19 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('backend') }}/js/jquery-3.5.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.js" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.min.js" />
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.jqueryui.js" />
-    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.bootstrap4.min.js" />
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.js" />
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.jqueryui.js" />
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap4.js" />
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/dataTables.buttons.js" />
     <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.dataTables.js" />
-    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.bootstrap4.js"></script>
+    <script src="https://cdn.datatables.net/select/2.0.5/js/dataTables.select.js" />
+    <script src="https://cdn.datatables.net/select/2.0.5/js/select.dataTables.js" />
+    <script src="https://cdn.datatables.net/buttons/3.1.1/js/buttons.print.min.js" />
     <script src="{{ asset('backend') }}/js/sidenav-scripts.js"></script>
     <script src="{{ asset('frontend') }}/js/main.js"></script>
 
@@ -30,8 +30,10 @@
     <!-- Styles -->
     <link href="{{ asset('backend') }}/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('frontend') }}/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css" />
     <link href="https://cdn.datatables.net/2.1.3/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.0.5/css/select.dataTables.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.css" rel="stylesheet" />
 
 
@@ -56,8 +58,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">Settings</a>
-                    <a class="dropdown-item" href="#">Activity Log</a>
+                    <a class="dropdown-item" href="#">{{ Auth::user()['name'] }}</a>
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -77,6 +78,10 @@
                         <a class="nav-link" href="{{ route('dashboard') }}">
                             <div class="sb-nav-link-icon"><i class="fas fas-duotone fa-house-user"></i></div>
                             Dashboard
+                        </a>
+                        <a class="nav-link" href="{{ route('all.statuses') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fas-duotone fa-check-double"></i></div>
+                            System Statuses
                         </a>
 
 

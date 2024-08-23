@@ -12,16 +12,17 @@
                 Device List
             </div>
             <div>
-                <a href="{{ route('add.device') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Add New Device</a>
+                <a href="{{ route('add.device') }}" class="btn btn-md btn-info"><i class="fa fa-md fa-plus"></i> Add New Device</a>
             </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-bordered table-hover table-striped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table display" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Device Type/Category</th>
+                            <th></th>
                             <th>Device Name</th>
+                            <th>Device Type/Category</th>
                             <th>Product Code</th>
                             <th>Status</th>
                             <th>Assigned</th>
@@ -32,8 +33,9 @@
                     <tbody>
                         @foreach($devices as $row)
                         <tr>
-                            <td>{{ $row['category'] }}</td>
+                            <td></td>
                             <td>{{ $row['device_name'] }}</td>
+                            <td>{{ $row['category'] }}</td>
                             <td>{{ $row['product_code'] }}</td>
                             <td>{{ $row['device_status'] }}</td>
                             @if($row['is_assigned'] === 1)
@@ -65,14 +67,24 @@
 
         // Call the dataTables jQuery plugin
         $('#dataTable').DataTable({
+
             order: [
                 [1, 'asc'],
-                [5, 'desc']
+                [4, 'desc']
             ],
             columnDefs: [{
-                targets: [3, 4],
-                className: 'dt-center'
-            }],
+                    targets: [4, 5],
+                    className: 'dt-center'
+                },
+                {
+                    orderable: false,
+                    render: DataTable.render.select(),
+                    targets: 0
+                }
+            ],
+            select: {
+                style: 'multi'
+            },
         });
 
 

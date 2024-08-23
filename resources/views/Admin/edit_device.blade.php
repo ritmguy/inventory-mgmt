@@ -5,7 +5,7 @@
 <main>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-7">
+            <div class="col-lg-6">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header">
                         @if($device->device_name !== '')
@@ -67,33 +67,65 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <!-- History Table -->
-                        <div class="form-group">
-                            <div>
-                                <h3 class="text-center font-weight-light my-4">Device History</h3>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Transaction Type</th>
-                                            <th>User</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
 
-                                    <tbody>
-                                        @foreach($history as $log)
-                                        <tr>
-                                            <td>{{ $log['transaction_type'] }}</td>
-                                            <td>{{ $log['name'] }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($log['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
 
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="card-body">
+                        <div>
+
+                            <h3 class="text-center font-weight-light my-4">History</h3>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="dataTable" name="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction Type</th>
+                                        <th>User</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach($history as $log)
+                                    <tr>
+                                        <td>{{ $log['transaction_type'] }}</td>
+                                        <td>{{ $log['name'] }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($log['updated_at'])->tz('America/New_York')->toDateTimeString() }}</td>
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr class="py-3">
+                        <!-- device Notes -->
+                        <div>
+                            <h3 class="text-center font-weight-light my-4">Notes</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="notesTable" name="notesTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>User</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($notes as $note)
+                                    <tr>
+                                        <td>{{ \Carbon\Carbon::parse($note->created_at)->tz('America/New_York')->toDateTimeString() }}</td>
+                                        <td>{{ $note->user_id }}</td>
+                                        <td>{{ json_decode($notes->device_note)}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -109,8 +141,13 @@
 <script>
     // Call the dataTables jQuery plugin
     $(document).ready(function() {
-        $('#dataTable').DataTable();
+        $('#dataTable').DataTable({
+            pageLength: 5
+        });
 
+        $('#notesTable').DataTable({
+            pageLength: 5
+        });
     });
 </script>
 @endsection

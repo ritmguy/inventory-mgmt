@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\Device;
+use App\Models\DeviceNote;
 use App\Models\Product;
 use App\Models\Transaction as Log;
 use Carbon\Carbon;
@@ -100,6 +101,12 @@ class DeviceController extends Controller
         $device = Device::where('unique_id', $id)->first();
         $product = Product::find($device['product_id']);
         $history = $this->getDeviceHistory($id);
+        $notes = DeviceNote::select('notes->>$.notes as device_note', 'device_notes.created_at', 'users.name')
+            ->leftJoin('users', 'users.id', '=', 'device_notes.user_id')
+            ->where('device_uuid', $id)->get();
+        // if ($notes === null || empty($notes)) {
+        //     $notes = [];
+        // }
 
         // Check for current assignment
         $currentAgentAr = Agent::find($device['agent_id']);
@@ -108,7 +115,8 @@ class DeviceController extends Controller
             ->with('device', $device)
             ->with('product', $product)
             ->with('history', $history)
-            ->with('current_agent', $currentAgentAr);
+            ->with('current_agent', $currentAgentAr)
+            ->with('notes', $notes);
     }
 
     /**
@@ -156,6 +164,23 @@ class DeviceController extends Controller
             ->with('products', $productCounts);
     }
 
+    public function addNote(Request $request): void
+    {
+        try {
+            DeviceNote::create([
+                'user_id' => Auth::id(),
+                'notes' => json_encode(
+                    [
+                        'notes' => [
+                            $request->input('addNote')
+                        ]
+                    ]
+                ),
+            ]);
+        } catch (Exception $e) {
+            error_log('AddDeviceNote Exception => ' . $e->getMessage());
+        }
+    }
     /**
      * Assign Device to agent
      *

@@ -12,7 +12,7 @@
                 Products
             </div>
             <div>
-                <a href="{{ route('add.device') }}" class="btn btn-md btn-success"><i class="fa fa-md fa-plus"></i> Add Product</a>
+                <a href="{{ route('add.device') }}" class="btn btn-md btn-info"><i class="fa fa-md fa-plus"></i> Add Product</a>
             </div>
         </div>
         <div class="card-body">
