@@ -5,6 +5,7 @@
 ## Requirements
 - PHP 8.0|8.1|8.2
 - Debian 11.x
+- Composer 2.x
 
 Dockerfile is included for quick turn up.
 
