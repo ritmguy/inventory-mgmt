@@ -1,0 +1,74 @@
+
+
+
+services:
+
+  db:
+    build:
+      context: './docker/mysql'
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    env_file:
+      - './docker/mysql/.env'
+    networks:
+      - local
+      
+
+  redis:
+    image: redis:6.2
+    ports:
+      - 6379:6379
+    networks:
+      - local
+
+
+  app:
+    # image: dunglas/frankenphp:latest-php8.3-bookworm
+    # uncomment the following line if you want to use a custom Dockerfile
+    container_name: inventory-admin
+    build:
+      context: './'
+      dockerfile: Dockerfile.frankenphp
+
+    # debug for dev only
+    environment:
+      - CADDY_GLOBAL_OPTIONS="debug"
+
+    # uncomment the following line if you want to run this in a production environment
+    restart: unless-stopped
+
+    ports:
+      - "8080:8080" # HTTP
+      - "443:443" # HTTPS
+      - "443:443/udp" # HTTP/3
+    volumes:
+      - ./:/app
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - local
+
+    # comment the following line in production, it allows to have nice human-readable logs in dev
+    tty: true
+
+
+networks:
+  local:
+    name: net1
+    driver: bridge
+    # set bind address to host
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
+    # Set internal subnet
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
+
+# Volumes needed for Caddy certificates and configuration
+volumes:
+  caddy_data:
+  caddy_config:

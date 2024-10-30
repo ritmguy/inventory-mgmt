@@ -1,0 +1,65 @@
+FROM dunglas/frankenphp:latest-php8.3-bookworm
+
+ENV APP_DIR="/app"
+ENV SERVER_NAME="app, 172.16.238.4, localhost, 127.0.0.1"
+
+RUN \
+    # franeknphp extension installation
+    install-php-extensions \
+    pdo_mysql \
+    opcache \
+    redis \
+    mysqli \
+    pcntl \
+    bcmath \
+    #
+    # utils and build reqs
+    #
+    && ln -snf /usr/share/zoneinfo/UTC /etc/localtime \
+    && apt-get update -y \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    ca-certificates \
+    curl \
+    unzip \
+    vim \
+    supervisor \
+    zip \
+    build-essential \
+    lsb-release \
+    gnupg \
+    #
+    # Clean up installation artifacts to make image leaner
+    #
+    && apt-get -y autoremove \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+COPY php.ini /usr/local/etc/php/
+COPY supervisord.conf /etc/supervisor/conf.d/
+COPY --chown=www-data:www-data --chmod=755 Caddyfile /etc/caddy/
+
+# Application
+COPY --chown=www-data:www-data --chmod=755 . $APP_DIR
+WORKDIR $APP_DIR
+
+# Run composer install
+RUN \
+    chsh -s /bin/bash www-data \
+    && su -m www-data -c " \
+    php -d auto_prepend_file='' -d disable_functions='' \
+    /usr/local/bin/composer install \
+    --optimize-autoloader \
+    --no-interaction \
+    --no-ansi \
+    --no-progress \
+    --no-scripts \
+    --prefer-dist" \
+    && chmod -R g+w $APP_DIR/bootstrap/cache $APP_DIR/storage/logs $APP_DIR/storage/framework/cache
+
+EXPOSE 8080 80 443
+
+# CMD ["/usr/local/bin/frankenphp", "run"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]

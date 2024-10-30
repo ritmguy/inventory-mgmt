@@ -1,0 +1,37 @@
+{
+	frankenphp 
+
+	# Configure when the directive must be executed
+	order php_server before file_server
+}
+
+:8080 {
+    # enable logging
+    log
+
+    # Document root
+	root * /app/app/public
+
+    # Enable compression
+    encode zstd gzip
+
+	# Force some headers
+	header {
+		Allow "DELETE, GET, POST"
+		Access-Control-Allow-Headers "*"
+	}
+
+    # Only allow GET, POST, and DELETE
+	@bad_methods {
+		not method DELETE
+		not method GET
+		not method POST
+	}
+	handle @bad_methods {
+		respond `{"status": "fail", "data": "Method Not Allowed"}` 405
+	}
+
+
+	# Execute PHP files in the current directory and serve assets
+	php_server
+}
